@@ -2,10 +2,13 @@ from flask import Blueprint, request, jsonify, make_response
 from modules.db import Database
 from modules import app
 from flask import Response
+from flask_cors import CORS, cross_origin
 
+CORS(app)
 module = Blueprint('user', __name__)
 
 @module.route('/feeds', methods=['GET'])
+@cross_origin()
 def feeds():
     db_instance = Database()
     db = db_instance.mongodb_conn()
@@ -32,6 +35,7 @@ def feeds():
     return jsonify(response)
 
 @module.route('/country-data', methods=['GET'])
+@cross_origin()
 def country_data():
     db_instance = Database()
     db = db_instance.mongodb_conn()

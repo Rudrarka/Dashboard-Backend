@@ -3,10 +3,13 @@ from modules.db import Database
 from modules import app
 from functools import wraps
 from flask import Response
+from flask_cors import CORS, cross_origin
 
+CORS(app)
 module = Blueprint('org', __name__)
 
 @module.route('/super-app', methods=['GET'])
+@cross_origin()
 def super_app():
     db_instance = Database()
     db = db_instance.mongodb_conn()
@@ -47,6 +50,7 @@ def super_app():
     return jsonify(response)
 
 @module.route('/stats', methods=['GET'])
+@cross_origin()
 def stats():
     db_instance = Database()
     db = db_instance.mongodb_conn()
